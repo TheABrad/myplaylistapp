@@ -1,0 +1,51 @@
+<head>
+  <title>Alex's Music</title>
+</head>
+
+<body>
+  <header class="login">{{loginButtons align="right"}}</header>
+  <div class="container">
+  	<div class="row player">
+  	  <div class="span4">
+        {{> songs}}
+      </div>
+      <div class="span5">
+      	{{> youtube}}
+        {{> newSong}}
+      </div>
+    </div>
+  </div>
+</body>
+
+<template name="songs">
+  <h1 class="playlistName">Alex's Playlist</h1>
+  <ul>
+    {{#each songs}}
+      {{> song}}
+    {{/each}}
+  </ul>
+</template>
+
+<template name="song">
+  <li class="{{songSelected}}">{{togglePlay}}{{artist}} - {{song}}</li>
+</template>
+
+<template name="youtube">
+  <iframe id="ytplayer" type="text/html" width="470" height="264"
+  src="http://www.youtube.com/embed/{{youtubeID}}?autoplay=1&controls=0&showinfo=0&iv_load_policy=3"
+  frameborder="0" allowfullscreen>
+</template>
+
+<template name="newSong">
+  <div class="newsong">
+    <span>Previous Play Pause Next</span>
+    {{#if currentUser}}
+      <span id="error" style="color: red;"> </span>
+      <label>Artist:</label><input id="artistName" type="text" />
+      <label>Song:</label><input id="songName" type="text" />
+      <label>Youtube:</label><input id="youtubeID" type="text" />
+      <button class="btn btn-primary" id="addsong">Add Song</button>
+    {{/if}}
+  </div>
+</template>
+

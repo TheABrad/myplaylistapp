@@ -27,7 +27,8 @@
 </template>
 
 <template name="song">
-  <li class="{{songSelected}}">{{togglePlay}}{{artist}} - {{song}}</li>
+  <li class="{{songSelected}}">{{togglePlay}}<span class="song" id="{{youtubeID}}">{{artist}} - {{song}}</span>
+    {{#if currentUser}}<span class="delete_song">x</span>{{/if}}</li>
 </template>
 
 <template name="youtube">
@@ -44,7 +45,8 @@
       <label>Artist:</label><input id="artistName" type="text" />
       <label>Song:</label><input id="songName" type="text" />
       <label>Youtube:</label><input id="youtubeID" type="text" />
-      <button class="btn btn-primary" id="addsong">Add Song</button>
+      <button class="btn" id="addsong">Add Song</button>
+      <button class="btn" id="cancelSong">Cancel</button>
     {{/if}}
   </div>
 </template>

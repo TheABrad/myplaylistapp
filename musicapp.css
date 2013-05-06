@@ -40,6 +40,15 @@ li:hover {
 	cursor: default;
 }
 
+.song {
+	cursor: pointer;
+}
+
+.delete_song {
+	float: right;
+	cursor: pointer;
+}
+
 .player {
 	width: 840px;
 	margin-left: auto;
@@ -60,4 +69,6 @@ li:hover {
 .newsong {
 	padding: 20px;
 	margin: 0;
+	color: #ecf0f1;
 }
+

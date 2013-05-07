@@ -1,24 +1,24 @@
 <head>
-  <title>Alex's Music</title>
+  <title>Music</title>
 </head>
 
 <body>
   <header class="login">{{loginButtons align="right"}}</header>
   <div class="container">
-  	<div class="row player">
+  	<div class="row playlist">
   	  <div class="span4">
-        {{> songs}}
+        {{> songs }}
       </div>
       <div class="span5">
-      	{{> youtube}}
-        {{> newSong}}
-      </div>
+      	{{> youtube }}
+        {{> songControls }}
+      </div> 
     </div>
   </div>
 </body>
 
 <template name="songs">
-  <h1 class="playlistName">Alex's Playlist</h1>
+  <h1 class="playlistName">{{currentUser.username}}'s Playlist</h1>
   <ul>
     {{#each songs}}
       {{> song}}
@@ -27,8 +27,8 @@
 </template>
 
 <template name="song">
-  <li class="{{songSelected}}">{{togglePlay}}<span class="song" id="{{youtubeID}}">{{artist}} - {{song}}</span>
-    {{#if currentUser}}<span class="delete_song">x</span>{{/if}}</li>
+  <li class="{{songSelected}}"><span class="{{togglePlay}}"></span><span class="song" id="{{youtubeID}}">{{artist}} - {{song}}</span>
+    {{#if currentUser}}<span class="delete_song icon-trash"></span>{{/if}}</li>
 </template>
 
 <template name="youtube">
@@ -37,17 +37,26 @@
   frameborder="0" allowfullscreen>
 </template>
 
-<template name="newSong">
-  <div class="newsong">
-    <span>Previous Play Pause Next</span>
-    {{#if currentUser}}
-      <span id="error" style="color: red;"> </span>
-      <label>Artist:</label><input id="artistName" type="text" />
-      <label>Song:</label><input id="songName" type="text" />
-      <label>Youtube:</label><input id="youtubeID" type="text" />
-      <button class="btn" id="addsong">Add Song</button>
-      <button class="btn" id="cancelSong">Cancel</button>
-    {{/if}}
+<template name="songControls">
+  <div class="song_controls">
+    <h4>Now Playing:</h4>
+    <h3>{{nowPlaying.artist}} - {{nowPlaying.song}}</h3>
+    <span class="icon-step-backward icon-large"></span>
+    <span class="icon-play icon-large"></span>
+    <span class="icon-pause icon-large"></span>
+    <span class="icon-step-forward icon-large next_song"></span>
+    <span class="icon-angle-up icon-large" style="float:right;"></span>
+    <span class="icon-angle-down icon-large" style="float:right;"></span>
+    <div class="add_song">
+      {{#if currentUser}}
+        <span id="error" style="color: red;"> </span>
+        <label>Artist:</label><input id="artistName" type="text" />
+        <label>Song:</label><input id="songName" type="text" />
+        <label>Youtube:</label><input id="youtubeID" type="text" />
+        <button class="btn" id="addsong">Add Song</button>
+        <button class="btn" id="cancelSong">Cancel</button>
+      {{/if}}
+    </div>
   </div>
 </template>
 

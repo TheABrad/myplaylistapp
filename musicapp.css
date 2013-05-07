@@ -49,7 +49,7 @@ li:hover {
 	cursor: pointer;
 }
 
-.player {
+.playlist {
 	width: 840px;
 	margin-left: auto;
 	margin-right: auto;
@@ -66,9 +66,22 @@ li:hover {
 	background-color: #2980b9;
 }
 
-.newsong {
+.song_controls {
 	padding: 20px;
 	margin: 0;
 	color: #ecf0f1;
+}
+
+.icon-large {
+	padding: 10px;
+}
+
+.icon-angle-up {
+	display: none;
+}
+
+.add_song {
+	display: none;
+	padding-top: 15px;
 }
 

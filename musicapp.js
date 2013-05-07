@@ -1,17 +1,24 @@
-Songs = new Meteor.Collection('songs'); //Database for songs. Schema is {artist:, song:, youtubeID:}
+//Database for songs. Schema is {artist: [artist name], song: [song name], youtubeID: [YouTube ID]}
+Songs = new Meteor.Collection('songs'); 
 
 if (Meteor.isClient) {
-  var admin = function() {
-    if (Meteor.user().emails[0].address == 'alex.guerrilla@gmail.com') {
-      console.log("its me!");
-      return true;
-    } else {
-      console.log("nope");
-      return false;
-    }
-  };
+  Meteor.startup(function () {
+    Deps.autorun(function () {
+      if (! Session.get("youID")) {
+        var song = Songs.findOne()
+        if (song) {
+          selectSong(song);
+        }
+      }
+    });
+  });
 
-  // Templates 
+  Accounts.ui.config({
+    passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
+  });
+  
+
+  //Playlist Bar
   Template.songs.songs = function () {
     return Songs.find({}, {sort: {artist: 1, song: 1}});
   };
@@ -21,29 +28,47 @@ if (Meteor.isClient) {
   };
 
   Template.song.togglePlay = function() {
-    return Session.equals("togglePlay", this._id) ? "> " : "";
+    return Session.equals("togglePlay", this._id) ? "icon-play-circle" : "";
   }
 
   Template.youtube.youtubeID = function () {
     return Session.get("youID")
   };
 
-  Template.newSong.error = function() {
+  Template.songControls.error = function() {
     return Session.get("error");
   };
 
+
+  //Song Controls
+  
+
+  function selectSong(song){
+     Session.set("togglePlay", song._id);
+     Session.set('sessionColor', song._id);
+     Session.set('youID', song.youtubeID); 
+  };
+
+  var nowPlaying = function () {
+    var nowPlaying = Session.get("youID");
+    return Songs.findOne({youtubeID: nowPlaying});
+  };
+
+  
+  Template.songControls.nowPlaying = function() {
+    return nowPlaying();
+  };
 
   //Template Events
   Template.song.events = {
     //When you click on a song in the list, it loads the song into the youtube window.
     'click .song': function() {
-      Session.set("togglePlay", this._id);
-      Session.set('sessionColor', this._id);
-      Session.set('youID', this.youtubeID); 
+      selectSong(this); 
     },
-
+ 
     'click .delete_song': function() {
       Songs.remove(this._id);
+      Session.set('youID', '');
     }
   };
 
@@ -82,7 +107,23 @@ if (Meteor.isClient) {
     $('input').val('');
   };
 
-  Template.newSong.events = {
+  Template.songControls.events = {
+    //song controls
+    'click .next_song': function () {
+      nextSong();
+    },
+
+    'click .icon-angle-up': function() {
+      $(".add_song").slideUp();
+      $(".icon-angle-down").show();
+      $(".icon-angle-up").hide();
+    },
+
+    'click .icon-angle-down': function() {
+      $(".add_song").slideDown();
+      $(".icon-angle-down").hide();
+      $(".icon-angle-up").show();
+    },
     //add the song
     'click button#addsong' : function () {
       var artist = document.getElementById("artistName").value.trim();
@@ -101,6 +142,8 @@ if (Meteor.isClient) {
       clearSong();
     }
   };
+
+  
 
 }
 

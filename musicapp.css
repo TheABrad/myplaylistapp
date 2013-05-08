@@ -42,6 +42,7 @@ li:hover {
 
 .song {
 	cursor: pointer;
+	overflow: hidden;
 }
 
 .delete_song {

@@ -30,7 +30,7 @@ if (Meteor.isClient) {
   Template.song.togglePlay = function() {
     return Session.equals("togglePlay", this._id) ? "icon-play-circle" : "";
   }
-
+  
   Template.youtube.youtubeID = function () {
     return Session.get("youID")
   };
@@ -39,10 +39,37 @@ if (Meteor.isClient) {
     return Session.get("error");
   };
 
+  //Youtube
+  Template.youtube.rendered = function () {
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('ytplayerid', {
+        width: "470",
+        height: "264",
+        videoId: Session.get("youID"),
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      event.target.playVideo();
+    }
+
+    function onPlayerStateChange(event) {
+      // TODO: add functions for state change
+    }
+  };
 
   //Song Controls
-  
-
   function selectSong(song){
      Session.set("togglePlay", song._id);
      Session.set('sessionColor', song._id);
@@ -68,7 +95,7 @@ if (Meteor.isClient) {
  
     'click .delete_song': function() {
       Songs.remove(this._id);
-      Session.set('youID', '');
+      
     }
   };
 
@@ -93,22 +120,24 @@ if (Meteor.isClient) {
 
   
   
-  function parseYoutube(url){
+  var parseYoutube = function (url) {
     var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
     if (match&&match[2].length==11){
       return match[2];
     } else {
-      //error
+      // TODO: add an error function
     }
   };
 
-  function clearSong() {
-    $('input').val('');
+  
+  var clearSong = function () {
+      $('input').val('');
   };
 
   Template.songControls.events = {
-    //song controls
+
+    
     'click .next_song': function () {
       nextSong();
     },
@@ -125,7 +154,7 @@ if (Meteor.isClient) {
       $(".icon-angle-up").show();
     },
     //add the song
-    'click button#addsong' : function () {
+    'click button#addsong': function () {
       var artist = document.getElementById("artistName").value.trim();
       var song = document.getElementById("songName").value.trim();
       var youtube = document.getElementById("youtubeID").value.trim();
@@ -138,7 +167,7 @@ if (Meteor.isClient) {
       
     },
 
-    'click button#cancelSong' : function () {
+    'click button#cancelSong': function () {
       clearSong();
     }
   };

@@ -1,4 +1,5 @@
-Meteor.js app I made to share music playlists the help of YouTube. Work in porgress.
+Meteor.js app I made to share music playlists the help of YouTube. Work in progress.
+
 TODO: Add youtube player controls. Set up seperate playlists for multiple users.
 
 #Getting Started

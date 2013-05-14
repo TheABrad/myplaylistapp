@@ -15,7 +15,8 @@ body {
 
 h1 {
 	color: #ecf0f1;
-	background-color: #16a085;
+	background-color: #27ae60;
+	/* background-color: #16a085; */
 	padding: 10px;
 	margin: 0;
 }
@@ -28,6 +29,8 @@ ul {
 li { 
 	color: #ecf0f1;
 	padding: 10px;
+	border-bottom: solid 1px;
+	border-bottom-color: #7f8c8d;
 }
 li.selected { 
 	background-color: #f1c40f;

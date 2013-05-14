@@ -1,11 +1,12 @@
 //Database for songs. Schema is {artist: [artist name], song: [song name], youtubeID: [YouTube ID]}
 Songs = new Meteor.Collection('songs'); 
 
+
 if (Meteor.isClient) {
   Meteor.startup(function () {
     Deps.autorun(function () {
       if (! Session.get("youID")) {
-        var song = Songs.findOne()
+        var song = Songs.findOne({}, {sort: {artist: 1, song: 1}});
         if (song) {
           selectSong(song);
         }
@@ -39,35 +40,6 @@ if (Meteor.isClient) {
     return Session.get("error");
   };
 
-  //Youtube
-  Template.youtube.rendered = function () {
-    var tag = document.createElement('script');
-
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('ytplayerid', {
-        width: "470",
-        height: "264",
-        videoId: Session.get("youID"),
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    function onPlayerReady(event) {
-      event.target.playVideo();
-    }
-
-    function onPlayerStateChange(event) {
-      // TODO: add functions for state change
-    }
-  };
 
   //Song Controls
   function selectSong(song){
@@ -77,27 +49,18 @@ if (Meteor.isClient) {
   };
 
   var nowPlaying = function () {
-    var nowPlaying = Session.get("youID");
-    return Songs.findOne({youtubeID: nowPlaying});
+    return Songs.findOne({youtubeID: Session.get("youID")});
   };
 
-  
+
+  var clearSong = function () {
+      $('input').val('');
+  };
+
   Template.songControls.nowPlaying = function() {
     return nowPlaying();
   };
 
-  //Template Events
-  Template.song.events = {
-    //When you click on a song in the list, it loads the song into the youtube window.
-    'click .song': function() {
-      selectSong(this); 
-    },
- 
-    'click .delete_song': function() {
-      Songs.remove(this._id);
-      
-    }
-  };
 
   //Validate song entry
   Validation = {
@@ -130,16 +93,29 @@ if (Meteor.isClient) {
     }
   };
 
-  
-  var clearSong = function () {
-      $('input').val('');
+  //Playlist Events
+  Template.song.events = {
+    //When you click on a song in the list, it loads the song into the youtube window.
+    'click .song': function() {
+      selectSong(this); 
+    },
+ 
+    'click .delete_song': function() {
+      Songs.remove(this._id);
+      
+    }
   };
 
+  // Song Controls Events
   Template.songControls.events = {
 
     
     'click .next_song': function () {
-      nextSong();
+      // TODO: Add a function to select the next song.
+    },
+
+    'click .prev_song': function () {
+      // TODO: Add a function to select the previous song.
     },
 
     'click .icon-angle-up': function() {

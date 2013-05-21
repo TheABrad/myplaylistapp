@@ -41,10 +41,10 @@
   <div class="song_controls">
     <h4>Now Playing:</h4>
     <h3>{{nowPlaying.artist}} - {{nowPlaying.song}}</h3>
-    <span class="icon-step-backward icon-large prev_song"></span>
+    <span class="icon-step-backward icon-large" id="prev_song"></span>
     <span class="icon-play icon-large"></span>
-    <span class="icon-pause icon-large"></span>
-    <span class="icon-step-forward icon-large next_song"></span>
+    <span class="icon-pause icon-large" id="#pause"></span>
+    <span class="icon-step-forward icon-large" id="next_song"></span>
     <span class="icon-angle-up icon-large" style="float:right;"></span>
     {{#if currentUser}}<span class="icon-angle-down icon-large" style="float:right;"></span>{{/if}}
     <div class="add_song">

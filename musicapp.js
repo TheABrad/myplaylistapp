@@ -110,12 +110,16 @@ if (Meteor.isClient) {
   Template.songControls.events = {
 
     
-    'click .next_song': function () {
+    'click #next_song': function () {
       // TODO: Add a function to select the next song.
     },
 
-    'click .prev_song': function () {
+    'click #prev_song': function () {
       // TODO: Add a function to select the previous song.
+    },
+
+    'click #pause': function () {
+      // TODO: Add a function to pause the song
     },
 
     'click .icon-angle-up': function() {

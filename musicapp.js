@@ -61,6 +61,11 @@ if (Meteor.isClient) {
     return nowPlaying();
   };
 
+  var nextSong = function () {
+    var next = $('.selected').next().find('.song').attr('id');
+    //Session.set('youID', next)
+  };
+
 
   //Validate song entry
   Validation = {

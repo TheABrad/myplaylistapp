@@ -63,7 +63,14 @@ if (Meteor.isClient) {
 
   var nextSong = function () {
     var next = $('.selected').next().find('.song').attr('id');
-    //Session.set('youID', next)
+    var nextSong = Songs.findOne({youtubeID: next});
+    selectSong(nextSong);
+  };
+
+  var prevSong = function () {
+    var prev = $('.selected').prev().find('.song').attr('id');
+    var prevSong = Songs.findOne({youtubeID: prev});
+    selectSong(prevSong);
   };
 
 
@@ -116,11 +123,11 @@ if (Meteor.isClient) {
 
     
     'click #next_song': function () {
-      // TODO: Add a function to select the next song.
+      nextSong();
     },
 
     'click #prev_song': function () {
-      // TODO: Add a function to select the previous song.
+      prevSong();
     },
 
     'click #pause': function () {

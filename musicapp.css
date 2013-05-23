@@ -80,6 +80,10 @@ li:hover {
 	padding: 10px;
 }
 
+.icon-large:hover {
+	background-color: #2980b9;
+}
+
 .icon-angle-up {
 	display: none;
 }

@@ -1,10 +1,19 @@
 //Database for songs. Schema is {artist: [artist name], song: [song name], youtubeID: [YouTube ID]}
 Songs = new Meteor.Collection('songs'); 
 
-
 if (Meteor.isClient) {
   Meteor.startup(function () {
     Deps.autorun(function () {
+      var tag = document.createElement('script');
+      tag.src = "http://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var player;
+
+      function onYoutubeIframeAPIReady() {
+        player = new YT.Player('ytplayer');
+      }
       if (! Session.get("youID")) {
         var song = Songs.findOne({}, {sort: {artist: 1, song: 1}});
         if (song) {
@@ -14,9 +23,13 @@ if (Meteor.isClient) {
     });
   });
 
+  
+
   Accounts.ui.config({
     passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
   });
+
+
   
 
   //Playlist Bar
@@ -73,6 +86,7 @@ if (Meteor.isClient) {
     selectSong(prevSong);
   };
 
+ 
 
   //Validate song entry
   Validation = {
@@ -131,7 +145,7 @@ if (Meteor.isClient) {
     },
 
     'click #pause': function () {
-      // TODO: Add a function to pause the song
+      // TODO: Add a pause function
     },
 
     'click .icon-angle-up': function() {

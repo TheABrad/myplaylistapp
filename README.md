@@ -2,6 +2,8 @@ Meteor.js app I made to share music playlists the help of YouTube. Work in progr
 
 TODO: Add youtube player controls. Set up seperate playlists for multiple users.
 
+Demo at: [http://abradmusic.meteor.com](http://abradmusic.meteor.com)
+
 #Getting Started
 1. Install Meteor.js `$ curl https://install.meteor.com | /bin/sh`
 

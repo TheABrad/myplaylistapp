@@ -18,7 +18,7 @@
 </body>
 
 <template name="songs">
-  <h1 class="playlistName">{{currentUser.username}}'s Playlist</h1>
+  <h1 class="playlistName">Alex's Playlist</h1>
   <ul>
     {{#each songs}}
       {{> song}}
@@ -33,7 +33,7 @@
 
 <template name="youtube">
   <iframe id="ytplayer" type="text/html" width="470" height="264"
-  src="http://www.youtube.com/embed/{{youtubeID}}?autoplay=1&controls=0&showinfo=0&iv_load_policy=3"
+  src="http://www.youtube.com/embed/{{youtubeID}}?enablejsapi=1&autoplay=1&controls=0&showinfo=0&iv_load_policy=3"
   frameborder="0" allowfullscreen>
 </template>
 
@@ -42,8 +42,6 @@
     <h4>Now Playing:</h4>
     <h3>{{nowPlaying.artist}} - {{nowPlaying.song}}</h3>
     <span class="icon-step-backward icon-large" id="prev_song"></span>
-    <span class="icon-play icon-large"></span>
-    <span class="icon-pause icon-large" id="#pause"></span>
     <span class="icon-step-forward icon-large" id="next_song"></span>
     <span class="icon-angle-up icon-large" style="float:right;"></span>
     {{#if currentUser}}<span class="icon-angle-down icon-large" style="float:right;"></span>{{/if}}
